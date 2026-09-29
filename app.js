@@ -6,6 +6,12 @@ const musicBtn=document.getElementById('musicBtn');
 const gate=document.getElementById('gate');
 const bloom=document.getElementById('bloom');
 const pageProgress=document.getElementById('pageProgress');
+const autoplayToggle=document.getElementById('autoplayToggle');
+const autoplayIcon=document.getElementById('autoplayIcon');
+const autoplayLabel=document.getElementById('autoplayLabel');
+const accountability=document.getElementById('accountability');
+const respect=document.getElementById('respect');
+const finale=document.getElementById('finale');
 
 let musicOn=false;
 let audioCtx=null;
@@ -229,6 +235,189 @@ const haloB=document.querySelector('.halo-b');
 let activeScene=0;
 let storyWordTimer=null;
 
+/* Guided autoplay */
+let autoPlaying=false;
+let autoPaused=false;
+let autoStep=0;
+let autoTimer=null;
+let scrollAnimationFrame=null;
+let scrollAnimationToken=0;
+
+const AUTO_SCENE_HOLDS=[6800,7200,7000,7400,8200,8600,9000];
+
+function updateAutoplayControl(){
+  autoplayToggle.classList.toggle('show',autoPlaying);
+  autoplayToggle.classList.toggle('playing',autoPlaying&&!autoPaused);
+  autoplayToggle.classList.toggle('paused',autoPlaying&&autoPaused);
+  autoplayIcon.textContent=autoPaused?'▶':'Ⅱ';
+  autoplayLabel.textContent=autoPaused?'Continue':'Pause';
+  autoplayToggle.setAttribute('aria-label',autoPaused?'Continue automatic story':'Pause automatic story');
+}
+
+function cancelCinematicScroll(){
+  scrollAnimationToken++;
+  if(scrollAnimationFrame){
+    cancelAnimationFrame(scrollAnimationFrame);
+    scrollAnimationFrame=null;
+  }
+}
+
+function cinematicScrollTo(target,duration=1350){
+  cancelCinematicScroll();
+
+  if(reducedMotion){
+    window.scrollTo(0,target);
+    return Promise.resolve();
+  }
+
+  const token=scrollAnimationToken;
+  const start=window.scrollY;
+  const distance=target-start;
+  const startTime=performance.now();
+
+  return new Promise(resolve=>{
+    const tick=now=>{
+      if(token!==scrollAnimationToken){
+        resolve();
+        return;
+      }
+
+      const t=clamp((now-startTime)/duration);
+      const eased=t<.5
+        ? 4*t*t*t
+        : 1-Math.pow(-2*t+2,3)/2;
+
+      window.scrollTo(0,start+distance*eased);
+
+      if(t<1){
+        scrollAnimationFrame=requestAnimationFrame(tick);
+      }else{
+        scrollAnimationFrame=null;
+        resolve();
+      }
+    };
+
+    scrollAnimationFrame=requestAnimationFrame(tick);
+  });
+}
+
+function storyTarget(index){
+  const travel=Math.max(1,story.offsetHeight-innerHeight);
+  const progress=clamp((index+.18)/scenes.length,0,.965);
+  return story.offsetTop+progress*travel;
+}
+
+function sectionTarget(element){
+  const top=element.getBoundingClientRect().top+window.scrollY;
+  return Math.max(0,top+(element.offsetHeight-innerHeight)/2);
+}
+
+function clearAutoTimer(){
+  clearTimeout(autoTimer);
+  autoTimer=null;
+}
+
+function finishAutoplay(){
+  clearAutoTimer();
+  cancelCinematicScroll();
+  autoPlaying=false;
+  autoPaused=false;
+  updateAutoplayControl();
+}
+
+async function runAutoStep(step){
+  if(!autoPlaying||autoPaused)return;
+
+  autoStep=step;
+  let target=0;
+  let hold=8000;
+  let duration=1350;
+
+  if(step<scenes.length){
+    target=storyTarget(step);
+    hold=AUTO_SCENE_HOLDS[step]||7800;
+    duration=1250;
+  }else if(step===scenes.length){
+    target=sectionTarget(accountability);
+    hold=9800;
+    duration=1650;
+  }else if(step===scenes.length+1){
+    target=sectionTarget(respect);
+    hold=9200;
+    duration=1650;
+  }else{
+    target=sectionTarget(finale);
+    duration=1750;
+  }
+
+  await cinematicScrollTo(target,duration);
+
+  if(!autoPlaying||autoPaused)return;
+
+  if(step>=scenes.length+2){
+    autoTimer=setTimeout(finishAutoplay,1800);
+    return;
+  }
+
+  autoTimer=setTimeout(()=>{
+    if(autoPlaying&&!autoPaused){
+      runAutoStep(step+1);
+    }
+  },hold);
+}
+
+function startAutoplay(){
+  if(reducedMotion){
+    story.scrollIntoView({behavior:'auto',block:'start'});
+    return;
+  }
+
+  clearAutoTimer();
+  autoPlaying=true;
+  autoPaused=false;
+  autoStep=0;
+  updateAutoplayControl();
+  runAutoStep(0);
+}
+
+function pauseAutoplay(){
+  if(!autoPlaying||autoPaused)return;
+
+  autoPaused=true;
+  clearAutoTimer();
+  cancelCinematicScroll();
+  updateAutoplayControl();
+}
+
+function resumeAutoplay(){
+  if(!autoPlaying||!autoPaused)return;
+
+  const storyRect=story.getBoundingClientRect();
+  const inStory=storyRect.top<innerHeight*.5&&storyRect.bottom>innerHeight*.5;
+
+  if(inStory){
+    autoStep=activeScene;
+  }else{
+    const y=window.scrollY+innerHeight*.5;
+    const accountTop=accountability.offsetTop;
+    const respectTop=respect.offsetTop;
+    const finaleTop=finale.offsetTop;
+
+    if(y>=finaleTop) autoStep=scenes.length+2;
+    else if(y>=respectTop) autoStep=scenes.length+1;
+    else if(y>=accountTop) autoStep=scenes.length;
+  }
+
+  autoPaused=false;
+  updateAutoplayControl();
+  runAutoStep(autoStep);
+}
+
+autoplayToggle.addEventListener('click',()=>{
+  if(autoPaused)resumeAutoplay();
+  else pauseAutoplay();
+});
+
 function setScene(index){
   if(index===activeScene&&scenes[index].classList.contains('active'))return;
 
@@ -263,20 +452,15 @@ scenes.forEach((_,i)=>{
   dot.setAttribute('aria-label','Go to memory '+(i+1));
 
   dot.addEventListener('click',()=>{
-    const travel=Math.max(1,story.offsetHeight-innerHeight);
-    const p=(i+.08)/scenes.length;
-
-    window.scrollTo({
-      top:story.offsetTop+p*travel,
-      behavior:reducedMotion?'auto':'smooth'
-    });
+    pauseAutoplay();
+    cinematicScrollTo(storyTarget(i),1050);
   });
 
   dotsWrap.appendChild(dot);
 });
 
 document.getElementById('beginStory').addEventListener('click',()=>{
-  story.scrollIntoView({behavior:reducedMotion?'auto':'smooth',block:'start'});
+  startAutoplay();
 });
 
 /* Final interaction */
@@ -327,14 +511,18 @@ document.getElementById('lastBtn').addEventListener('click',event=>{
 });
 
 function restartAll(){
+  clearAutoTimer();
+  cancelCinematicScroll();
+  autoPlaying=false;
+  autoPaused=false;
+  autoStep=0;
+  updateAutoplayControl();
+
   gate.classList.remove('open');
   setScene(0);
   wordline.forEach(word=>word.classList.remove('on'));
 
-  window.scrollTo({
-    top:0,
-    behavior:reducedMotion?'auto':'smooth'
-  });
+  cinematicScrollTo(0,reducedMotion?0:1150);
 }
 
 document.getElementById('restart').addEventListener('click',restartAll);
@@ -405,6 +593,25 @@ function requestScrollRender(){
 addEventListener('scroll',requestScrollRender,{passive:true});
 addEventListener('resize',requestScrollRender,{passive:true});
 
+/* If she touches the page or scrolls herself, the site gives control back immediately. */
+function manualNavigationIntent(event){
+  if(!autoPlaying||autoPaused)return;
+  if(event.target&&event.target.closest&&event.target.closest('#autoplayToggle'))return;
+  pauseAutoplay();
+}
+
+addEventListener('wheel',manualNavigationIntent,{passive:true});
+addEventListener('touchstart',manualNavigationIntent,{passive:true});
+addEventListener('pointerdown',event=>{
+  if(event.pointerType==='mouse')return;
+  manualNavigationIntent(event);
+},{passive:true});
+addEventListener('keydown',event=>{
+  if(['ArrowDown','ArrowUp','PageDown','PageUp','Home','End',' '].includes(event.key)){
+    manualNavigationIntent(event);
+  }
+});
+
 /* Background particles */
 const canvas=document.getElementById('stars');
 const ctx=canvas.getContext('2d');
@@ -466,4 +673,5 @@ function draw(){
 addEventListener('resize',resizeCanvas,{passive:true});
 resizeCanvas();
 draw();
+updateAutoplayControl();
 renderScroll();
