@@ -210,7 +210,7 @@ body:before{
 .scene p{margin:25px auto 0;max-width:750px;color:rgba(255,255,255,.7);font-size:clamp(17px,2vw,21px);line-height:1.7}
 .highlight{color:transparent;background:linear-gradient(90deg,#fff,#ffd0e4,#cbbcff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .story-word{
-  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.9);
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(var(--story-word-scale,.9));
   font-size:clamp(100px,19vw,280px);font-weight:800;letter-spacing:-.08em;
   color:rgba(255,255,255,.025);white-space:nowrap;z-index:0;
   transition:opacity .6s var(--ease),transform .9s var(--ease),filter .7s var(--ease);
