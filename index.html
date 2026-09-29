@@ -13,8 +13,11 @@
 <body>
   <canvas id="stars" aria-hidden="true"></canvas>
   <div class="noise" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
   <div class="bloom" id="bloom" aria-hidden="true"></div>
-  <div class="progress"><span id="progress"></span></div>
+  <div class="ambient-orb orb-one" aria-hidden="true"></div>
+  <div class="ambient-orb orb-two" aria-hidden="true"></div>
+  <div class="page-progress"><span id="pageProgress"></span></div>
 
   <header class="topbar">
     <div class="brand">For Mary Gladys · from Jason</div>
@@ -45,9 +48,9 @@
 
         <h1><span class="gradient">For Mary Gladys.</span></h1>
         <p class="lead">
-          I already told you I was sorry. This is not me trying to repeat the same message
-          in prettier words. I just wanted to say it in a way that feels more like me,
-          and more like us.
+          I already told you I was sorry. This is not me trying to repeat the same
+          message in prettier words. I just wanted to say it in a way that feels
+          more like me, and more like us.
         </p>
 
         <div class="actions">
@@ -56,13 +59,19 @@
         </div>
         <p class="micro">Music starts after you tap.</p>
       </div>
+
+      <div class="scroll-cue" aria-hidden="true">
+        <span>scroll</span>
+        <i></i>
+      </div>
     </section>
 
     <section class="hero reveal" id="hero">
+      <div class="hero-glow" aria-hidden="true"></div>
       <div class="hero-inner">
         <div class="eyebrow"><i></i>Mary Gladys, I meant every word.</div>
-        <h2><span class="gradient">I am sorry.</span></h2>
-        <p>
+        <h2 data-depth="0.08"><span class="gradient">I am sorry.</span></h2>
+        <p class="hero-copy" data-split>
           I know saying sorry does not erase the moments I handled badly.
           I know there were times I could have been calmer, clearer, kinder,
           and more thoughtful with you. I wish I had done some things differently.
@@ -79,124 +88,103 @@
       </div>
     </section>
 
-    <section class="story reveal" id="story">
-      <div class="story-card">
-        <article class="scene active">
-          <div class="number">01</div>
-          <h3>I still remember<br /><span class="highlight">the mountain.</span></h3>
-          <p>
-            The first day I set my eyes on you there is still one of those moments
-            that comes back to me. I did not know then what you would come to mean to me.
-            I just remember seeing you, and somehow that memory stayed.
-          </p>
-        </article>
+    <section class="story-scroll" id="story">
+      <div class="story-stage">
+        <div class="story-halo halo-a" aria-hidden="true"></div>
+        <div class="story-halo halo-b" aria-hidden="true"></div>
+        <div class="story-word" id="storyWord" aria-hidden="true">MOUNTAIN</div>
 
-        <article class="scene">
-          <div class="number">02</div>
-          <h3>That cup of water<br /><span class="highlight">meant more than you knew.</span></h3>
-          <p>
-            You saw that I needed water and passed me a cup. It was such a small thing,
-            but I remember it because you noticed. You cared without making a big deal out of it.
-            Those little things are part of why I grew to care about you so much.
-          </p>
-        </article>
+        <div class="story-card" id="storyCard">
+          <article class="scene active" data-word="MOUNTAIN">
+            <div class="number">01</div>
+            <h3>I still remember<br /><span class="highlight">the mountain.</span></h3>
+            <p>
+              The first day I set my eyes on you there is still one of those moments
+              that comes back to me. I did not know then what you would come to mean to me.
+              I just remember seeing you, and somehow that memory stayed.
+            </p>
+          </article>
 
-        <article class="scene">
-          <div class="number">03</div>
-          <h3>At the top,<br /><span class="highlight">when I was in pain.</span></h3>
-          <p>
-            I remember you massaging me because I was hurting. I remember being there with you
-            and feeling looked after. Maybe you did not think much of it, but I did.
-            I still do.
-          </p>
-        </article>
+          <article class="scene" data-word="WATER">
+            <div class="number">02</div>
+            <h3>That cup of water<br /><span class="highlight">meant more than you knew.</span></h3>
+            <p>
+              You saw that I needed water and passed me a cup. It was such a small thing,
+              but I remember it because you noticed. You cared without making a big deal out of it.
+              Those little things are part of why I grew to care about you so much.
+            </p>
+          </article>
 
-        <article class="scene">
-          <div class="number">04</div>
-          <h3>And your ndole.<br /><span class="highlight">I will never forget it.</span></h3>
-          <p>
-            The days you cooked ndole for me are memories I genuinely treasure.
-            It is funny how food can become tied to a person, but yours did.
-            There are ordinary moments with you that became special to me simply because they were with you.
-          </p>
-        </article>
+          <article class="scene" data-word="CARE">
+            <div class="number">03</div>
+            <h3>At the top,<br /><span class="highlight">when I was in pain.</span></h3>
+            <p>
+              I remember you massaging me because I was hurting. I remember being there with you
+              and feeling looked after. Maybe you did not think much of it, but I did.
+              I still do.
+            </p>
+          </article>
 
-        <article class="scene">
-          <div class="number">05</div>
-          <h3>That is why<br /><span class="highlight">this matters to me.</span></h3>
-          <p>
-            What I feel is not only about the good days or about wanting things to go back to how they were.
-            It is also about all these small moments, the way you made me feel seen,
-            the way I became comfortable around you, and the fact that I genuinely care about you.
-          </p>
-        </article>
+          <article class="scene" data-word="NDOLE">
+            <div class="number">04</div>
+            <h3>And your ndole.<br /><span class="highlight">I will never forget it.</span></h3>
+            <p>
+              The days you cooked ndole for me are memories I genuinely treasure.
+              It is funny how food can become tied to a person, but yours did.
+              There are ordinary moments with you that became special to me simply because they were with you.
+            </p>
+          </article>
 
-        <article class="scene">
-          <div class="number">06</div>
-          <h3>About where<br /><span class="highlight">we are now.</span></h3>
-          <p>
-            I am okay with us being friends if that is what feels right for you.
-            I am not calling friendship a waiting room, and I am not trying to secretly negotiate my way back.
-            I would rather have a real, honest place in your life than force something that is not right for you.
-          </p>
-        </article>
+          <article class="scene" data-word="US">
+            <div class="number">05</div>
+            <h3>That is why<br /><span class="highlight">this matters to me.</span></h3>
+            <p>
+              What I feel is not only about the good days or about wanting things to go back to how they were.
+              It is also about all these small moments, the way you made me feel seen,
+              the way I became comfortable around you, and the fact that I genuinely care about you.
+            </p>
+          </article>
 
-        <article class="scene">
-          <div class="number">07</div>
-          <h3>But if life ever<br /><span class="highlight">brings us there again...</span></h3>
-          <p>
-            If we ever naturally find ourselves close again, I would not mind asking you out all over again.
-            I would probably find a hundred different ways to do it too.
-            Not because you owe me another chance, but because if that chance ever came naturally,
-            I would want to do it better.
-          </p>
-        </article>
+          <article class="scene" data-word="FRIENDS">
+            <div class="number">06</div>
+            <h3>About where<br /><span class="highlight">we are now.</span></h3>
+            <p>
+              I am okay with us being friends if that is what feels right for you.
+              I am not calling friendship a waiting room, and I am not trying to secretly negotiate my way back.
+              I would rather have a real, honest place in your life than force something that is not right for you.
+            </p>
+          </article>
 
-        <div class="controls">
-          <div class="dots" id="dots" aria-label="Story navigation"></div>
-          <button class="pill" id="pause">Pause</button>
+          <article class="scene" data-word="MAYBE">
+            <div class="number">07</div>
+            <h3>But if life ever<br /><span class="highlight">brings us there again...</span></h3>
+            <p>
+              If we ever naturally find ourselves close again, I would not mind asking you out all over again.
+              I would probably find a hundred different ways to do it too.
+              Not because you owe me another chance, but because if that chance ever came naturally,
+              I would want to do it better.
+            </p>
+          </article>
+        </div>
+
+        <div class="story-rail" aria-label="Story progress">
+          <span class="rail-line"><i id="storyRailFill"></i></span>
+          <div class="dots" id="dots"></div>
+        </div>
+
+        <div class="keep-scrolling" id="keepScrolling" aria-hidden="true">
+          <span>keep going</span>
+          <i></i>
         </div>
       </div>
     </section>
 
-    <section class="memories reveal">
-      <div class="memory-inner">
-        <span class="smallcap">Things I do not want to forget</span>
-        <h3><span class="gradient">It was never just one big moment.</span></h3>
-        <p class="memory-intro">
-          It was a collection of little things that slowly became important to me.
-        </p>
-
-        <div class="memory-grid">
-          <article>
-            <span class="memory-index">01</span>
-            <b>The mountain</b>
-            <p>The first day I saw you and had no idea how much space you would eventually take up in my mind.</p>
-          </article>
-          <article>
-            <span class="memory-index">02</span>
-            <b>The cup of water</b>
-            <p>You noticed I needed it before I had to make a big thing out of it. I remember that kindness.</p>
-          </article>
-          <article>
-            <span class="memory-index">03</span>
-            <b>When I was hurting</b>
-            <p>You massaged me at the top because I was in pain. That care stayed with me.</p>
-          </article>
-          <article>
-            <span class="memory-index">04</span>
-            <b>Your ndole</b>
-            <p>I can still think about those days and smile. I do not think I will ever forget your ndole.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="statement reveal">
-      <div>
+    <section class="statement reveal cinematic-section">
+      <div class="section-light light-left" aria-hidden="true"></div>
+      <div class="statement-inner">
         <span class="smallcap">What I am actually trying to say</span>
-        <h3><span class="line-reveal gradient">I know I could have done better.</span></h3>
-        <p>
+        <h3 class="mask-heading"><span class="gradient">I know I could have done better.</span></h3>
+        <p class="reveal-copy" data-split>
           There were times my words, choices, or the way I reacted made things harder than they needed to be.
           I am not going to dress that up. I hurt you in ways I wish I had not, and I am sorry for my part in that.
           I cannot change what already happened, but I can be honest about it.
@@ -204,11 +192,12 @@
       </div>
     </section>
 
-    <section class="statement reveal">
-      <div>
+    <section class="statement reveal cinematic-section second-statement">
+      <div class="section-light light-right" aria-hidden="true"></div>
+      <div class="statement-inner">
         <span class="smallcap">And I am not asking you for anything</span>
-        <h3><span class="line-reveal gradient">You can take this however you need to.</span></h3>
-        <p>
+        <h3 class="mask-heading"><span class="gradient">You can take this however you need to.</span></h3>
+        <p class="reveal-copy" data-split>
           You do not have to give me an answer. You do not have to decide anything because I made a website.
           I just wanted you to know that I respect where you are, I value having you in my life,
           and I want to handle whatever comes next with more care.
@@ -216,32 +205,15 @@
       </div>
     </section>
 
-    <section class="full-letter reveal">
-      <h3><span class="gradient">What I would say to you now.</span></h3>
-      <div class="paper">
-        <p>Mary Gladys, I already told you I was sorry, but I have kept thinking about us and about the way I handled certain things.</p>
-
-        <p>I know there were moments when my words, my decisions, or the way I reacted made things heavier between us. There are things I wish I had handled with more patience and more understanding. I am not saying this to defend myself, and I am not trying to make you forget anything. I just want to own the fact that I could have done better with you, and I am genuinely sorry.</p>
-
-        <p>When I think about you, I do not only think about where things went wrong. I think about the mountain and the first day I saw you. I think about that cup of water you passed me because you noticed I needed it. I think about being at the top in pain and you massaging me. I think about the days you cooked ndole, which I honestly do not think I will ever forget. There are so many little moments like that, and they matter to me because they were ours.</p>
-
-        <p>You have made me feel a lot of things. Happy, nervous, excited, vulnerable, peaceful, confused sometimes, but above all, you made me care deeply. That is still true. I do not want to pretend otherwise just because things between us changed.</p>
-
-        <p>At the same time, I respect where we are now. If friendship is what feels right for you, then I can accept that genuinely. I do not see friendship as a place where I sit around waiting to get you back. I value you as a person, and I would rather have something honest with you than try to force a version of us that you are not ready for or do not want.</p>
-
-        <p>And yes, if life ever brings us close again naturally, I would not mind asking you out all over again. Probably in different places, on different days, and in more ways than you expect. Not because I think you owe me another chance, but because if I ever got that opportunity again, I would want to approach it differently and do it properly.</p>
-
-        <p>I am not expecting this to fix everything. I am not asking you to make a decision after reading it. I just wanted you to know that I am sorry, that I still care, that I respect you, and that whatever relationship we have from here, I want to treat it with more care than I did before.</p>
-
-        <p>And if one day life somehow brings us back there, do not be too surprised if I still find a hundred different ways to ask Mary Gladys out again. ❤️</p>
-      </div>
-    </section>
-
     <section class="finale reveal" id="finale">
+      <div class="final-orbit orbit-one" aria-hidden="true"></div>
+      <div class="final-orbit orbit-two" aria-hidden="true"></div>
+      <div class="final-orbit orbit-three" aria-hidden="true"></div>
+
       <div class="final-inner">
         <div class="heart">♥</div>
-        <h2><span class="gradient">I meant this.</span></h2>
-        <p>
+        <h2 class="final-title"><span class="gradient">I meant this.</span></h2>
+        <p class="final-copy" data-split>
           Not because I expect anything from you after reading it.
           I just did not want the last thing I gave you to be another badly handled moment.
         </p>
