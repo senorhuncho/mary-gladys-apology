@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#050507" />
+  <meta name="description" content="A sincere letter from Jason to Mary Gladys." />
+  <meta property="og:title" content="For Mary Gladys ♥" />
+  <meta property="og:description" content="Something Jason wanted to say properly." />
+  <title>For Mary Gladys ♥</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <canvas id="stars" aria-hidden="true"></canvas>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="bloom" id="bloom" aria-hidden="true"></div>
+  <div class="progress"><span id="progress"></span></div>
+
+  <header class="topbar">
+    <div class="brand">For Mary Gladys · from Jason</div>
+    <div class="tools">
+      <button class="icon" id="musicBtn" aria-label="Toggle music">♪</button>
+      <button class="icon" id="restartTop" aria-label="Restart">↻</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="gate" id="gate">
+      <div class="aura a1"></div>
+      <div class="aura a2"></div>
+      <div class="aura a3"></div>
+
+      <div class="gate-inner">
+        <div class="kicker">A letter I wanted to give you properly</div>
+
+        <div class="envelope" aria-hidden="true">
+          <div class="env-back"></div>
+          <div class="letter-card">
+            <span>Mary Gladys,</span>
+            <strong>I owe you a sincere apology.</strong>
+          </div>
+          <div class="flap"></div>
+          <div class="seal">♥</div>
+        </div>
+
+        <h1><span class="gradient">For Mary Gladys.</span></h1>
+        <p class="lead">
+          No pressure. No expectation. Just something honest I wanted you to hear
+          from me with the care it deserves.
+        </p>
+
+        <div class="actions">
+          <button class="primary" id="openBtn">Open my letter ♥</button>
+          <button class="secondary" id="quietBtn">Open without music</button>
+        </div>
+        <p class="micro">The original ambient soundtrack begins after you tap.</p>
+      </div>
+    </section>
+
+    <section class="hero reveal" id="hero">
+      <div class="hero-inner">
+        <div class="eyebrow"><i></i>Mary Gladys, this is for you.</div>
+        <h2><span class="gradient">I owe you<br />an apology.</span></h2>
+        <p>
+          Not a rushed “sorry.” Not a defense. I wanted to slow down, own my part,
+          and say the things I should have handled with more care.
+        </p>
+
+        <div class="wordline" id="wordline" aria-label="I'm sorry. I respect where you are. And I care.">
+          <span>I’m</span><span>sorry.</span><span>I</span><span>respect</span>
+          <span>where</span><span>you</span><span>are.</span><span>And</span>
+          <span>I</span><span>care.</span>
+        </div>
+
+        <div class="actions">
+          <button class="primary" id="beginStory">Hear me out</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="story reveal" id="story">
+      <div class="story-card">
+        <article class="scene active">
+          <div class="number">01</div>
+          <h3>First,<br /><span class="highlight">I’m sorry.</span></h3>
+          <p>
+            I’m sorry for the ways I handled things between us, for the moments
+            where my actions, words, or decisions may have hurt you, and for
+            anything I did that made what we had heavier than it needed to be.
+          </p>
+        </article>
+
+        <article class="scene">
+          <div class="number">02</div>
+          <h3>No defense.<br /><span class="highlight">Just honesty.</span></h3>
+          <p>
+            I’m not writing this to defend myself or convince you to forget anything.
+            I just want to acknowledge that I could have done better, and I’m genuinely sorry.
+          </p>
+        </article>
+
+        <article class="scene">
+          <div class="number">03</div>
+          <h3>I can accept<br /><span class="highlight">friendship.</span></h3>
+          <p>
+            Not because I’m pretending I don’t have feelings, and not because I see
+            friendship as some waiting room until I can get you back. I genuinely value
+            having you in my life, even if friendship is what feels right for us right now.
+          </p>
+        </article>
+
+        <article class="scene">
+          <div class="number">04</div>
+          <h3>If life ever brings us<br /><span class="highlight">close again…</span></h3>
+          <p>
+            If it happens naturally, I honestly wouldn’t mind asking you out all over again —
+            in different ways, in different places, and on different days. Not to pressure you.
+            Just because if I ever got that opportunity again, I’d want to do it properly.
+          </p>
+        </article>
+
+        <article class="scene">
+          <div class="number">05</div>
+          <h3>You made me feel<br /><span class="highlight">so much.</span></h3>
+          <div class="emotions">
+            <span>happy</span><span>nervous</span><span>excited</span>
+            <span>vulnerable</span><span>peaceful</span><span>deeply caring</span>
+          </div>
+          <p>And despite everything that has happened, that means something to me.</p>
+        </article>
+
+        <article class="scene">
+          <div class="number">06</div>
+          <h3>I’m not asking for<br /><span class="highlight">an answer.</span></h3>
+          <p>
+            I don’t expect this website to magically fix everything, and I’m not asking you
+            for a decision right now. I just wanted you to know that I’m sorry, that I respect
+            where you are, and that whatever happens from here, I want to treat you and whatever
+            relationship we have with more care than I did before.
+          </p>
+        </article>
+
+        <article class="scene">
+          <div class="number">07</div>
+          <h3>And if one day<br /><span class="highlight">life circles back…</span></h3>
+          <p>
+            Don’t be surprised if I find a hundred different ways to ask
+            Mary Gladys out again. ♥
+          </p>
+        </article>
+
+        <div class="controls">
+          <div class="dots" id="dots" aria-label="Story navigation"></div>
+          <button class="pill" id="pause">Pause</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="statement reveal">
+      <div>
+        <span class="smallcap">What I want you to know</span>
+        <h3><span class="line-reveal gradient">You don’t owe me forgiveness.</span></h3>
+        <p>
+          You don’t owe me a particular reaction, a second chance, or a return to what we had.
+          This apology is mine to give sincerely. Your space and your feelings are yours to choose.
+        </p>
+      </div>
+    </section>
+
+    <section class="statement reveal">
+      <div>
+        <span class="smallcap">If I get to do better</span>
+        <h3><span class="line-reveal gradient">Care should be visible.</span></h3>
+        <div class="promises">
+          <article><b>Listen before reacting</b><span>Understand what you’re feeling before I rush to explain myself.</span></article>
+          <article><b>Communicate with clarity</b><span>Say what I mean, ask when I don’t understand, and avoid assumptions.</span></article>
+          <article><b>Let actions carry the apology</b><span>Doing better consistently is what would make these words real.</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="full-letter reveal">
+      <h3><span class="gradient">The letter, exactly as I meant it.</span></h3>
+      <div class="paper">
+        <p>Mary Gladys, I owe you a sincere apology.</p>
+
+        <p>I’m sorry for the ways I handled things between us, for the moments where my actions, words, or decisions may have hurt you, and for anything I did that made what we had heavier than it needed to be. I’m not writing this to defend myself or convince you to forget anything. I just want to acknowledge that I could have done better, and I’m genuinely sorry.</p>
+
+        <p>I’ve also thought a lot about where we are now, and I want you to know that I’m okay with us being friends. Not because I’m pretending I don’t have feelings, and not because I see friendship as some waiting room until I can get you back. I genuinely value having you in my life, even if friendship is what feels right for us right now.</p>
+
+        <p>And if, naturally, we ever find ourselves getting close again and reaching the kind of place we were before, I honestly wouldn’t mind asking you out all over again. Maybe in different ways, in different places, and on different days. Not because I want to pressure you, but because if I ever get that opportunity again, I’d want to do it properly.</p>
+
+        <p>Because with you, I’ve found myself feeling so many different things in so many different ways. You’ve made me feel happy, nervous, excited, vulnerable, peaceful, confused sometimes, but most importantly, you’ve made me care deeply. And despite everything that has happened, that means something to me.</p>
+
+        <p>I don’t expect this message to magically fix everything, and I’m not asking you for an answer or a decision right now. I just wanted you to know that I’m sorry, that I respect where you are, and that whatever happens from here, I want to treat you and whatever relationship we have with more care than I did before.</p>
+
+        <p>And if one day life brings us back to that place again, don’t be surprised if I find a hundred different ways to ask Mary Gladys out again. ❤️</p>
+      </div>
+    </section>
+
+    <section class="finale reveal" id="finale">
+      <div class="final-inner">
+        <div class="heart">♥</div>
+        <h2><span class="gradient">With honesty.<br />With care.</span></h2>
+        <p>
+          Whatever this becomes from here, I want the version of me in your life
+          to be kinder with your heart than I was before.
+        </p>
+        <div class="signature">— Jason<span>for Mary Gladys, sincerely</span></div>
+        <div class="actions">
+          <button class="primary" id="lastBtn">One last thing ♥</button>
+          <button class="secondary" id="restart">Replay from the beginning</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>
