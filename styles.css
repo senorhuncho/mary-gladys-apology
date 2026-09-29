@@ -1,4 +1,3 @@
-
 :root{
   --bg:#050507;--fg:#f5f5f7;--muted:#a7a7b0;--line:rgba(255,255,255,.12);
   --pink:#ff5d9e;--violet:#8b5cf6;--blue:#58c7ff;--gold:#ffd27d;
@@ -126,18 +125,13 @@ body:before{
 .statement p{max-width:760px;margin:28px auto 0;color:rgba(255,255,255,.67);font-size:clamp(18px,2vw,22px);line-height:1.7}
 .line-reveal{position:relative;display:inline-block;clip-path:inset(0 100% 0 0);transition:clip-path 1.35s var(--ease)}
 .visible .line-reveal{clip-path:inset(0 0 0 0)}
-.promises{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-top:36px;text-align:left}
-.promises article{padding:22px;border:1px solid var(--line);border-radius:24px;background:rgba(255,255,255,.05);min-height:155px;transform:translateY(25px);opacity:0;transition:.8s var(--ease)}
-.visible .promises article{transform:none;opacity:1}
-.visible .promises article:nth-child(2){transition-delay:.12s}.visible .promises article:nth-child(3){transition-delay:.24s}
-.promises b{display:block;margin-bottom:10px}.promises span{color:rgba(255,255,255,.56);font-size:14px;line-height:1.55}
 .full-letter{width:min(980px,calc(100% - 34px));margin:0 auto 15vh;padding:clamp(26px,5vw,52px);border:1px solid var(--line);border-radius:30px;background:rgba(255,255,255,.045);backdrop-filter:blur(22px);box-shadow:0 30px 100px rgba(0,0,0,.4);position:relative;overflow:hidden}
 .full-letter:before{content:"";position:absolute;width:320px;height:320px;border-radius:50%;left:-150px;top:-180px;background:radial-gradient(circle,rgba(139,92,246,.18),transparent 70%)}
 .full-letter h3{font-size:clamp(34px,5vw,54px);letter-spacing:-.055em;margin:0 0 28px;position:relative}
 .paper{position:relative;color:rgba(255,255,255,.72);font-size:clamp(16px,1.8vw,19px);line-height:1.86}
 .paper p{opacity:0;transform:translateY(16px);transition:.8s var(--ease)}
 .full-letter.visible .paper p{opacity:1;transform:none}
-.full-letter.visible .paper p:nth-child(2){transition-delay:.1s}.full-letter.visible .paper p:nth-child(3){transition-delay:.2s}.full-letter.visible .paper p:nth-child(4){transition-delay:.3s}.full-letter.visible .paper p:nth-child(5){transition-delay:.4s}.full-letter.visible .paper p:nth-child(6){transition-delay:.5s}.full-letter.visible .paper p:nth-child(7){transition-delay:.6s}
+.full-letter.visible .paper p:nth-child(2){transition-delay:.1s}.full-letter.visible .paper p:nth-child(3){transition-delay:.2s}.full-letter.visible .paper p:nth-child(4){transition-delay:.3s}.full-letter.visible .paper p:nth-child(5){transition-delay:.4s}.full-letter.visible .paper p:nth-child(6){transition-delay:.5s}.full-letter.visible .paper p:nth-child(7){transition-delay:.6s}.full-letter.visible .paper p:nth-child(8){transition-delay:.7s}
 .finale{min-height:100svh;padding:90px 22px 120px;display:grid;place-items:center;text-align:center}
 .final-inner{width:min(960px,100%)}
 .heart{width:90px;height:90px;margin:0 auto 30px;border-radius:30px;display:grid;place-items:center;font-size:38px;border:1px solid var(--line);background:linear-gradient(145deg,rgba(255,255,255,.14),rgba(255,255,255,.045));box-shadow:0 20px 70px rgba(255,93,158,.22);animation:beat 1.9s ease-in-out infinite}
@@ -147,11 +141,94 @@ body:before{
 .bloom{position:fixed;left:50%;top:50%;width:clamp(240px,42vw,520px);aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%) scale(.3);opacity:0;background:radial-gradient(circle,rgba(255,93,158,.26),rgba(139,92,246,.10) 40%,transparent 70%);filter:blur(8px);pointer-events:none;z-index:50}
 .bloom.go{animation:bloom 1.4s ease-out}
 @keyframes bloom{30%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) scale(1.5)}}
+
+.memories{
+  width:min(1120px,calc(100% - 34px));
+  margin:0 auto 15vh;
+  padding:clamp(32px,6vw,74px);
+  border:1px solid var(--line);
+  border-radius:32px;
+  background:
+    radial-gradient(circle at 85% 10%,rgba(255,93,158,.11),transparent 24rem),
+    radial-gradient(circle at 8% 95%,rgba(139,92,246,.11),transparent 24rem),
+    rgba(255,255,255,.035);
+  backdrop-filter:blur(24px);
+  box-shadow:0 30px 100px rgba(0,0,0,.36);
+}
+.memory-inner{width:100%}
+.memories h3{
+  max-width:900px;
+  margin:18px 0 0;
+  font-size:clamp(42px,7vw,86px);
+  line-height:.98;
+  letter-spacing:-.065em;
+}
+.memory-intro{
+  max-width:680px;
+  margin:24px 0 0;
+  color:rgba(255,255,255,.65);
+  font-size:clamp(17px,2vw,21px);
+  line-height:1.65;
+}
+.memory-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+  margin-top:38px;
+}
+.memory-grid article{
+  position:relative;
+  min-height:210px;
+  padding:26px;
+  border:1px solid var(--line);
+  border-radius:25px;
+  background:linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.035));
+  overflow:hidden;
+  opacity:0;
+  transform:translateY(24px) scale(.985);
+  transition:.8s var(--ease);
+}
+.memories.visible .memory-grid article{opacity:1;transform:none}
+.memories.visible .memory-grid article:nth-child(2){transition-delay:.12s}
+.memories.visible .memory-grid article:nth-child(3){transition-delay:.24s}
+.memories.visible .memory-grid article:nth-child(4){transition-delay:.36s}
+.memory-grid article:after{
+  content:"";
+  position:absolute;
+  width:170px;
+  height:170px;
+  right:-80px;
+  bottom:-90px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(255,149,189,.16),transparent 68%);
+}
+.memory-index{
+  display:block;
+  margin-bottom:32px;
+  color:rgba(255,255,255,.36);
+  font-size:12px;
+  letter-spacing:.15em;
+}
+.memory-grid b{
+  display:block;
+  font-size:clamp(22px,3vw,30px);
+  letter-spacing:-.035em;
+}
+.memory-grid p{
+  max-width:430px;
+  margin:12px 0 0;
+  color:rgba(255,255,255,.58);
+  line-height:1.65;
+  font-size:15px;
+}
+
 @media(max-width:760px){
   .topbar{padding:14px 16px}.brand{font-size:10px;max-width:70%}
   .envelope{height:250px}.gate.open .letter-card{transform:translateY(-68px) scale(1.04)}
-  .story-card{min-height:730px;padding:46px 22px 92px}.controls{left:18px;right:18px;bottom:18px}
-  .promises{grid-template-columns:1fr}.promises article{min-height:auto}.dot.active{width:18px}
+  .story-card{min-height:750px;padding:46px 22px 92px}.controls{left:18px;right:18px;bottom:18px}
+  .dot.active{width:18px}
+  .memory-grid{grid-template-columns:1fr}
+  .memory-grid article{min-height:auto}
 }
 @media(prefers-reduced-motion:reduce){
   *,*:before,*:after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
